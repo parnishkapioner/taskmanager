@@ -1,0 +1,7 @@
+[build]
+  functions = "netlify/functions"
+
+# Напоминания — каждый час
+[[scheduled-functions]]
+  name = "send-reminders"
+  cron = "0 * * * *"

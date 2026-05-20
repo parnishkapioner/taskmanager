@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Мои задачи</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f0; color: #1a1a1a; min-height: 100vh; }
+  header { background: #fff; border-bottom: 1px solid #e5e5e0; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; }
+  header h1 { font-size: 18px; font-weight: 600; }
+  header span { font-size: 13px; color: #888; }
+  .container { max-width: 720px; margin: 0 auto; padding: 24px 16px; }
+  .add-box { background: #fff; border-radius: 12px; border: 1px solid #e5e5e0; padding: 20px; margin-bottom: 24px; }
+  .add-box h2 { font-size: 15px; font-weight: 600; margin-bottom: 14px; color: #444; }
+  .add-box input, .add-box textarea, .add-box select { width: 100%; border: 1px solid #e5e5e0; border-radius: 8px; padding: 10px 12px; font-size: 14px; font-family: inherit; background: #fafaf8; color: #1a1a1a; margin-bottom: 10px; outline: none; transition: border 0.15s; }
+  .add-box input:focus, .add-box textarea:focus, .add-box select:focus { border-color: #888; background: #fff; }
+  .add-box textarea { resize: vertical; min-height: 60px; }
+  .row { display: flex; gap: 10px; }
+  .row select, .row input { flex: 1; }
+  .btn-add { width: 100%; background: #1a1a1a; color: #fff; border: none; border-radius: 8px; padding: 11px; font-size: 14px; font-weight: 500; cursor: pointer; transition: opacity 0.15s; }
+  .btn-add:hover { opacity: 0.85; }
+  .btn-add:disabled { opacity: 0.4; cursor: default; }
+  .dump-box { background: #fff8e6; border: 1px solid #f0d878; border-radius: 12px; padding: 16px 20px; margin-bottom: 24px; display: flex; gap: 10px; align-items: flex-start; }
+  .dump-box textarea { flex: 1; border: none; background: transparent; font-size: 14px; font-family: inherit; resize: none; outline: none; min-height: 40px; color: #1a1a1a; }
+  .dump-box button { background: #f0d020; border: none; border-radius: 8px; padding: 8px 14px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+  .dump-label { font-size: 12px; color: #a08020; font-weight: 600; margin-bottom: 6px; letter-spacing: 0.04em; }
+  .filters { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+  .filter-btn { background: #fff; border: 1px solid #e5e5e0; border-radius: 20px; padding: 6px 14px; font-size: 13px; cursor: pointer; transition: all 0.15s; }
+  .filter-btn.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+  .tasks-list { display: flex; flex-direction: column; gap: 10px; }
+  .task-card { background: #fff; border-radius: 10px; border: 1px solid #e5e5e0; padding: 14px 16px; display: flex; gap: 12px; align-items: flex-start; }
+  .task-card.done { opacity: 0.5; }
+  .task-card.done .task-title { text-decoration: line-through; }
+  .task-check { width: 20px; height: 20px; border: 2px solid #ccc; border-radius: 50%; cursor: pointer; flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+  .task-check:hover { border-color: #888; }
+  .task-check.checked { background: #1a1a1a; border-color: #1a1a1a; }
+  .task-check.checked::after { content: '✓'; color: #fff; font-size: 11px; font-weight: 700; }
+  .task-body { flex: 1; min-width: 0; }
+  .task-title { font-size: 15px; font-weight: 500; margin-bottom: 4px; word-break: break-word; }
+  .task-notes { font-size: 13px; color: #666; margin-bottom: 6px; }
+  .task-meta { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .badge { font-size: 11px; font-weight: 600; border-radius: 5px; padding: 2px 8px; letter-spacing: 0.03em; }
+  .badge-high { background: #fde8e8; color: #c02020; }
+  .badge-medium { background: #fff3cc; color: #9a6800; }
+  .badge-low { background: #e6f4e6; color: #2a7a2a; }
+  .badge-dump { background: #fff8e6; color: #a08020; }
+  .badge-date { background: #f0f0f0; color: #555; }
+  .badge-overdue { background: #fde8e8; color: #c02020; }
+  .task-del { background: none; border: none; color: #ccc; cursor: pointer; font-size: 16px; padding: 2px 4px; transition: color 0.15s; flex-shrink: 0; }
+  .task-del:hover { color: #e04040; }
+  .empty { text-align: center; color: #aaa; font-size: 14px; padding: 48px 0; }
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #1a1a1a; color: #fff; padding: 10px 20px; border-radius: 8px; font-size: 13px; opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 100; }
+  .toast.show { opacity: 1; }
+  @media (max-width: 480px) { .row { flex-direction: column; } }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📋 Мои задачи</h1>
+  <span id="task-count"></span>
+</header>
+
+<div class="container">
+
+  <div class="dump-box">
+    <div style="flex:1">
+      <div class="dump-label">⚡ BRAIN DUMP</div>
+      <textarea id="dump-input" placeholder="Быстрая мысль — скинь сюда, разберёшь позже..." rows="2"></textarea>
+    </div>
+    <button onclick="addDump()">Сохранить</button>
+  </div>
+
+  <div class="add-box">
+    <h2>Новая задача</h2>
+    <input type="text" id="task-title" placeholder="Что нужно сделать?" />
+    <textarea id="task-notes" placeholder="Заметки (необязательно)"></textarea>
+    <div class="row">
+      <select id="task-priority">
+        <option value="high">🔴 Высокий приоритет</option>
+        <option value="medium" selected>🟡 Средний</option>
+        <option value="low">🟢 Низкий</option>
+      </select>
+      <input type="datetime-local" id="task-due" />
+    </div>
+    <button class="btn-add" onclick="addTask()">Добавить задачу</button>
+  </div>
+
+  <div class="filters">
+    <button class="filter-btn active" onclick="setFilter('all', this)">Все</button>
+    <button class="filter-btn" onclick="setFilter('todo', this)">Активные</button>
+    <button class="filter-btn" onclick="setFilter('done', this)">Готово</button>
+    <button class="filter-btn" onclick="setFilter('dump', this)">Brain dump</button>
+    <button class="filter-btn" onclick="setFilter('high', this)">🔴 Срочные</button>
+  </div>
+
+  <div class="tasks-list" id="tasks-list">
+    <div class="empty">Загружаю...</div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================================
+// ВСТАВЬ СВОИ КЛЮЧИ СЮДА:
+const SUPABASE_URL = 'ВСТАВЬ_SUPABASE_URL'
+const SUPABASE_KEY = 'ВСТАВЬ_SUPABASE_ANON_KEY'
+// ============================================================
+
+const { createClient } = supabase
+const db = createClient(SUPABASE_URL, SUPABASE_KEY)
+
+let allTasks = []
+let currentFilter = 'all'
+
+async function loadTasks() {
+  const { data, error } = await db.from('tasks').select('*').order('created_at', { ascending: false })
+  if (error) { showToast('Ошибка загрузки: ' + error.message); return; }
+  allTasks = data || []
+  renderTasks()
+}
+
+function renderTasks() {
+  const list = document.getElementById('tasks-list')
+  let tasks = allTasks
+  if (currentFilter === 'todo') tasks = tasks.filter(t => t.status !== 'done')
+  else if (currentFilter === 'done') tasks = tasks.filter(t => t.status === 'done')
+  else if (currentFilter === 'dump') tasks = tasks.filter(t => t.is_brain_dump)
+  else if (currentFilter === 'high') tasks = tasks.filter(t => t.priority === 'high' && t.status !== 'done')
+
+  const active = allTasks.filter(t => t.status !== 'done').length
+  document.getElementById('task-count').textContent = active > 0 ? active + ' активных' : ''
+
+  if (tasks.length === 0) { list.innerHTML = '<div class="empty">Задач нет 🎉</div>'; return; }
+
+  list.innerHTML = tasks.map(t => {
+    const isOverdue = t.due_date && new Date(t.due_date) < new Date() && t.status !== 'done'
+    const dueStr = t.due_date ? formatDate(t.due_date) : ''
+    return `
+    <div class="task-card ${t.status === 'done' ? 'done' : ''}">
+      <div class="task-check ${t.status === 'done' ? 'checked' : ''}" onclick="toggleDone('${t.id}', '${t.status}')"></div>
+      <div class="task-body">
+        <div class="task-title">${escHtml(t.title)}</div>
+        ${t.notes ? `<div class="task-notes">${escHtml(t.notes)}</div>` : ''}
+        <div class="task-meta">
+          ${t.is_brain_dump ? '<span class="badge badge-dump">⚡ brain dump</span>' : `<span class="badge badge-${t.priority}">${priLabel(t.priority)}</span>`}
+          ${dueStr ? `<span class="badge ${isOverdue ? 'badge-overdue' : 'badge-date'}">${isOverdue ? '⚠️ ' : '📅 '}${dueStr}</span>` : ''}
+        </div>
+      </div>
+      <button class="task-del" onclick="deleteTask('${t.id}')">✕</button>
+    </div>`
+  }).join('')
+}
+
+async function addTask() {
+  const title = document.getElementById('task-title').value.trim()
+  if (!title) { showToast('Напиши название задачи'); return; }
+  const btn = document.querySelector('.btn-add')
+  btn.disabled = true
+  const { error } = await db.from('tasks').insert({
+    title,
+    notes: document.getElementById('task-notes').value.trim() || null,
+    priority: document.getElementById('task-priority').value,
+    due_date: document.getElementById('task-due').value || null,
+  })
+  btn.disabled = false
+  if (error) { showToast('Ошибка: ' + error.message); return; }
+  document.getElementById('task-title').value = ''
+  document.getElementById('task-notes').value = ''
+  document.getElementById('task-due').value = ''
+  showToast('Задача добавлена ✓')
+  loadTasks()
+}
+
+async function addDump() {
+  const text = document.getElementById('dump-input').value.trim()
+  if (!text) return
+  const { error } = await db.from('tasks').insert({ title: text, is_brain_dump: true, priority: 'low' })
+  if (error) { showToast('Ошибка: ' + error.message); return; }
+  document.getElementById('dump-input').value = ''
+  showToast('Сохранено в brain dump ⚡')
+  loadTasks()
+}
+
+async function toggleDone(id, status) {
+  const newStatus = status === 'done' ? 'todo' : 'done'
+  await db.from('tasks').update({ status: newStatus }).eq('id', id)
+  const task = allTasks.find(t => t.id === id)
+  if (task) task.status = newStatus
+  renderTasks()
+}
+
+async function deleteTask(id) {
+  await db.from('tasks').delete().eq('id', id)
+  allTasks = allTasks.filter(t => t.id !== id)
+  renderTasks()
+  showToast('Удалено')
+}
+
+function setFilter(f, btn) {
+  currentFilter = f
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'))
+  btn.classList.add('active')
+  renderTasks()
+}
+
+function formatDate(d) {
+  return new Date(d).toLocaleString('ru', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })
+}
+function priLabel(p) { return p === 'high' ? '🔴 Высокий' : p === 'medium' ? '🟡 Средний' : '🟢 Низкий' }
+function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }
+function showToast(msg) {
+  const t = document.getElementById('toast')
+  t.textContent = msg
+  t.classList.add('show')
+  setTimeout(() => t.classList.remove('show'), 2500)
+}
+
+loadTasks()
+setInterval(loadTasks, 30000)
+</script>
+</body>
+</html>
