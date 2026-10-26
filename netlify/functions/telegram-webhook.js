@@ -14,6 +14,7 @@ const TAGS = {
   'здоровье':  { area: 'personal', category: 'health' },
   'финансы':   { area: 'personal', category: 'finance' },
   'быт':       { area: 'personal', category: 'home' },
+  'дом':       { area: 'personal', category: 'home' },
   'underdogs': { area: 'personal', category: 'underdogs' },
   'андердогс': { area: 'personal', category: 'underdogs' },
 
@@ -33,7 +34,7 @@ const TAGS = {
 }
 const LABELS = {
   personal: 'Личное', work: 'Работа',
-  sport: 'Спорт', health: 'Здоровье', finance: 'Финансы', home: 'Быт', underdogs: 'Underdogs',
+  sport: 'Спорт', health: 'Здоровье', finance: 'Финансы', home: 'Дом', underdogs: 'Underdogs',
   ttp: 'TTP', jru: 'JRU', other: 'Прочее',
   as: 'AS', heritage: 'Heritage', events: 'Events', rent: 'Rent', staff: 'Staff',
 }
@@ -126,20 +127,19 @@ function describe(t) {
   const missing = []
   if (!t.area) missing.push('блок (#личное, #ttp, #jru…)')
   if (!t.due_date) missing.push('дедлайн (!завтра, !31.12 15:00)')
-  if (!t.notes) missing.push('пометки (со второй строки)')
   return { path, due, missing }
 }
 
 const HELP =
   '<b>Как добавить задачу</b>\n' +
   'Первая строка — задача, со второй строки — пометки.\n\n' +
-  '<b>Блок</b>: #личное #спорт #здоровье #финансы #быт #underdogs\n' +
+  '<b>Блок</b>: #личное #спорт #здоровье #финансы #дом #underdogs\n' +
   '#ttp #as #heritage · #jru #events #rent #staff · #работа\n\n' +
   '<b>Дедлайн</b>: !сегодня, !завтра 15:00, !31.12, !2026-12-31 18:00\n' +
   '<b>Приоритет</b>: !срочно (или !high / !low)\n\n' +
   '<b>Пример</b>\n' +
   '<code>Сверить бюджет ивента #events !31.10 12:00\nЗапросить смету у подрядчика</code>\n\n' +
-  'Если чего-то не хватает, задача попадёт во «Входящие», там её можно дозаполнить.\n\n' +
+  'Без блока задача попадёт в «Разобрать» на сайте.\n\n' +
   '/tasks — ближайшие задачи\n/dump текст — быстрая мысль во входящие'
 
 exports.handler = async (event) => {
@@ -214,7 +214,7 @@ exports.handler = async (event) => {
   if (d.path) reply += `\n📂 ${d.path}`
   if (d.due) reply += `\n📅 ${d.due}`
   if (task.priority === 'high') reply += `\n🔴 Высокий приоритет`
-  if (d.missing.length) reply += `\n\n${task.area ? '✏️' : '📥 Во входящих.'} Не хватает: ${d.missing.join(', ')}`
+  if (d.missing.length) reply += `\n\n${task.area ? '✏️' : '📥 В «Разобрать».'} Не хватает: ${d.missing.join(', ')}`
   await sendTg(chatId, reply)
 
   return { statusCode: 200, body: 'ok' }
