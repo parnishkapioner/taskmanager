@@ -38,7 +38,7 @@ exports.handler = async () => {
 
   // 1. Задачи просроченные (дедлайн прошёл, ещё не завершены)
   const overdue = await supabaseGet(
-    `tasks?status=neq.done&due_date=lt.${now.toISOString()}&notified_overdue=eq.false&is_brain_dump=eq.false`
+    `tasks?status=neq.done&due_date=lt.${now.toISOString()}&notified_overdue=eq.false&is_brain_dump=not.is.true`
   )
 
   for (const task of overdue) {
@@ -51,7 +51,7 @@ exports.handler = async () => {
 
   // 2. Задачи с дедлайном через 24 часа
   const dueSoon = await supabaseGet(
-    `tasks?status=neq.done&due_date=gt.${now.toISOString()}&due_date=lt.${tomorrow.toISOString()}&notified_1day=eq.false&is_brain_dump=eq.false`
+    `tasks?status=neq.done&due_date=gt.${now.toISOString()}&due_date=lt.${tomorrow.toISOString()}&notified_1day=eq.false&is_brain_dump=not.is.true`
   )
 
   for (const task of dueSoon) {
@@ -64,11 +64,11 @@ exports.handler = async () => {
 
   // 3. Утренняя сводка — только в 9:00 (час = 9 по UTC+3 = 6 UTC)
   if (now.getUTCHours() === 6) {
-    const todayEnd = new Date(now)
-    todayEnd.setUTCHours(23, 59, 59)
+    const m = new Date(now.getTime() + 3 * 3600e3) // Минск
+    const todayEnd = new Date(Date.UTC(m.getUTCFullYear(), m.getUTCMonth(), m.getUTCDate(), 20, 59, 59))
 
     const todayTasks = await supabaseGet(
-      `tasks?status=neq.done&is_brain_dump=eq.false&order=priority.asc&limit=10`
+      `tasks?status=neq.done&due_date=lte.${todayEnd.toISOString()}&order=due_date.asc&limit=30`
     )
 
     if (todayTasks.length > 0) {
@@ -77,7 +77,7 @@ exports.handler = async () => {
         `${priEmoji[t.priority] || '⚪'} ${t.title}`
       )
       await sendTg(
-        `☀️ <b>Доброе утро! Твои задачи:</b>\n\n` + lines.join('\n') +
+        `☀️ <b>Доброе утро! На сегодня:</b>\n\n` + lines.join('\n') +
         (todayTasks.length > 10 ? `\n\n...и ещё ${todayTasks.length - 10}` : '')
       )
     }
