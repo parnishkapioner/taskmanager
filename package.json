@@ -1,0 +1,7 @@
+{
+  "name": "taskmanager",
+  "private": true,
+  "dependencies": {
+    "ical.js": "2.2.1"
+  }
+}
