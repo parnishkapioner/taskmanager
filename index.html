@@ -253,43 +253,112 @@ input, textarea, select { font: inherit; color: inherit; }
   .row-side .icon-btn.hide-m { display: none; }
   .bg-credit { display: none; }
 }
+
+/* ===== v3 additions ===== */
+.hero { align-items: flex-end; padding: 26px 32px 22px; }
+.hero-greet { padding: 0; margin: 0; max-width: none; }
+.hero-actions { display: flex; gap: 8px; align-items: center; }
+
+.main-head .seg2 { margin-left: auto; }
+.seg2 { display: inline-flex; background: var(--surface-2); border-radius: 11px; padding: 3px; gap: 2px; }
+.seg2 button { padding: 6px 14px; border-radius: 8px; font-weight: 500; color: var(--muted); font-size: 13px; display: inline-flex; align-items: center; gap: 6px; }
+.seg2 button:hover { color: var(--text); }
+.seg2 button.active { background: var(--surface); color: var(--text); box-shadow: 0 1px 3px rgba(15,23,42,.12); }
+
+.nav-group.last { border-top: 1px solid var(--border); padding-top: 12px; margin-top: 4px; }
+
+/* home: two columns */
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+.col-head { display: flex; align-items: center; gap: 8px; padding: 0 6px 10px; }
+.col-head .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 4px color-mix(in srgb, var(--c) 18%, transparent); }
+.col-head h3 { font-size: 15px; font-weight: 700; cursor: pointer; }
+.col-head h3:hover { color: var(--primary); }
+.col-head .n { font-size: 12px; color: var(--faint); }
+.col-head .icon-btn { margin-left: auto; }
+.col .row { padding: 11px 14px; }
+.mini-empty { padding: 22px 16px; text-align: center; color: var(--faint); font-size: 13px; }
+.inbox-note { width: 100%; display: flex; align-items: center; gap: 10px; text-align: left; background: rgba(240,138,36,.12); border: 1px solid rgba(240,138,36,.3); color: var(--text); border-radius: 14px; padding: 11px 14px; margin-bottom: 20px; font-weight: 500; }
+.inbox-note:hover { background: rgba(240,138,36,.18); }
+.inbox-note .go { margin-left: auto; color: var(--warn); font-weight: 600; white-space: nowrap; }
+
+/* calendar day expand */
+.cal-expand { grid-column: 1 / -1; background: var(--surface-2); border-bottom: 1px solid var(--border); padding: 14px 14px 16px; animation: drop .18s ease; }
+@keyframes drop { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+.cal-expand .agenda-head { margin-bottom: 10px; }
+.cal-expand .agenda-head h3 { font-size: 14px; }
+.cal-expand .rows { box-shadow: 0 1px 2px rgba(15,23,42,.04); }
+
+/* modal tiles */
+.modal-body { padding: 20px 20px 6px; }
+.title-wrap { padding: 2px 4px 14px; }
+.title-wrap.err .title-input { box-shadow: inset 0 -2px 0 var(--danger); }
+.title-wrap .err-msg { margin-top: 2px; }
+.title-wrap.err .err-msg { display: block; }
+.tile { position: relative; background: var(--surface); border: 1px solid var(--glass-border); border-radius: 16px; padding: 13px 14px 14px; margin-bottom: 10px; overflow: hidden; transition: border-color .2s, box-shadow .2s; }
+.tile::before { content: ''; position: absolute; right: -40px; top: -50px; width: 170px; height: 110px; background: radial-gradient(closest-side, var(--g, transparent), transparent); opacity: .45; pointer-events: none; transition: opacity .3s; }
+.tile.t-area { --g: #8f97ff; } .tile.t-due { --g: #ff9a4d; } .tile.t-subs { --g: #3ddc97; } .tile.t-notes { --g: #5aa2ff; }
+.tile.err { border-color: var(--danger); box-shadow: 0 0 0 3px var(--danger-soft); }
+.tile-head { position: relative; display: flex; align-items: center; gap: 9px; margin-bottom: 11px; }
+.tile-ico { width: 28px; height: 28px; border-radius: 9px; display: flex; align-items: center; justify-content: center; background: var(--surface-2); color: var(--muted); flex-shrink: 0; }
+.tile-label { font-weight: 600; font-size: 14px; }
+.badge { margin-left: auto; font-size: 11.5px; font-weight: 600; border-radius: 999px; padding: 3px 9px; white-space: nowrap; transition: all .2s; }
+.badge.need { background: rgba(240,138,36,.14); color: var(--warn); }
+.badge.ok { background: var(--personal-soft); color: var(--personal); }
+.badge.opt { background: var(--surface-2); color: var(--faint); }
+.tile.err .badge { background: var(--danger-soft); color: var(--danger); }
+.tile .pills + .pills { margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border); }
+.date-row .input { min-width: 0; }
+.date-row .in-date { flex: 1.4; min-width: 150px; }
+.date-row .in-time { flex: 0 0 120px; }
+.quick-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+.hint-line { font-size: 11.5px; color: var(--faint); margin-top: 6px; }
+.textarea { min-height: 64px; }
+.subs { display: flex; flex-direction: column; gap: 2px; }
+.sub { display: flex; align-items: center; gap: 10px; padding: 4px 2px; }
+.sub .check { width: 17px; height: 17px; margin: 0; }
+.sub-text { flex: 1; border: none; background: transparent; outline: none; padding: 4px 0; font-size: 14px; }
+.sub.done .sub-text { color: var(--faint); text-decoration: line-through; }
+.sub .icon-btn { width: 26px; height: 26px; font-size: 14px; opacity: .6; }
+.sub:hover .icon-btn { opacity: 1; }
+.sub-add { display: flex; align-items: center; gap: 10px; padding: 4px 2px; color: var(--faint); }
+.sub-add input { flex: 1; border: none; background: transparent; outline: none; padding: 6px 0; font-size: 14px; }
+.pri-row { display: flex; align-items: center; gap: 10px; padding: 4px 4px 2px; }
+.pri-row span { font-size: 12.5px; color: var(--muted); font-weight: 600; }
+.pri-row .pill { padding: 4px 10px; font-size: 12.5px; }
+.chip.subs-chip { background: var(--personal-soft); color: var(--personal); }
+.toast .acts { display: flex; gap: 2px; }
+
+@media (max-width: 900px) {
+  .hero { padding: 16px 16px 16px; align-items: flex-start; }
+  .cols { grid-template-columns: 1fr; }
+  .main-head .seg2 button { padding: 6px 10px; }
+  .seg2 .lbl { display: none; }
+  .cal-expand { padding: 12px 8px; }
+}
 </style>
 </head>
 <body>
 <div class="bg"><div class="bg-img" id="bg-a"></div><div class="bg-img" id="bg-b"></div><div class="bg-shade"></div></div>
 
 <header class="hero">
-  <div class="logo">
-    <span class="logo-mark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
-    Мои задачи
-  </div>
+  <div class="hero-greet" id="greet"></div>
   <div class="spacer"></div>
-  <div class="seg" id="view-seg">
-    <button data-view="list">Список</button>
-    <button data-view="calendar">Календарь</button>
-    <button data-view="done">Сделано</button>
+  <div class="hero-actions">
+    <button class="btn btn-glass" id="bg-btn" title="Сменить фон" aria-label="Сменить фон">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-5 4 4 3-3 6 6"/><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="16" cy="9" r="1.6"/></svg>
+    </button>
+    <button class="btn btn-white" id="new-btn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+      Задача
+    </button>
   </div>
-  <div class="spacer"></div>
-  <button class="btn btn-glass" id="bg-btn" title="Сменить фон" aria-label="Сменить фон">
-    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-5 4 4 3-3 6 6"/><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="16" cy="9" r="1.6"/></svg>
-  </button>
-  <button class="btn btn-white" id="new-btn">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-    Задача
-  </button>
 </header>
-<div class="hero-greet" id="greet"></div>
 
 <div class="shell">
   <div class="panel">
     <aside class="sidebar" id="sidebar"></aside>
     <main class="main">
-      <div class="main-head">
-        <button class="menu-btn" id="menu-btn" aria-label="Разделы">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-        </button>
-        <div class="scope-title" id="scope-title"></div>
-      </div>
+      <div class="main-head" id="main-head"></div>
       <div class="content" id="content"></div>
     </main>
   </div>
@@ -300,44 +369,64 @@ input, textarea, select { font: inherit; color: inherit; }
 <div class="overlay" id="overlay">
   <form class="modal" id="task-form" novalidate>
     <div class="modal-body">
-      <div class="field" data-f="title">
+      <div class="title-wrap" id="t-title">
         <input class="title-input" id="f-title" placeholder="Что нужно сделать?" autocomplete="off">
         <div class="err-msg">Напиши название</div>
       </div>
-      <div class="field" data-f="area">
-        <label>Блок <span class="req">*</span></label>
+
+      <div class="tile t-area" id="t-area">
+        <div class="tile-head">
+          <span class="tile-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg></span>
+          <span class="tile-label">Блок</span>
+          <span class="badge need" id="b-area">обязательно</span>
+        </div>
         <div class="pills" id="f-area"></div>
-        <div class="err-msg">Выбери: личное или рабочее</div>
-      </div>
-      <div class="field" data-f="category" id="f-cat-wrap">
-        <label>Категория</label>
         <div class="pills" id="f-cat"></div>
-        <div class="err-msg">Выбери категорию</div>
-      </div>
-      <div class="field" id="f-sub-wrap">
-        <label>Направление</label>
         <div class="pills" id="f-sub"></div>
       </div>
-      <div class="field" data-f="due">
-        <label>Дедлайн <span class="req">*</span></label>
+
+      <div class="tile t-due" id="t-due">
+        <div class="tile-head">
+          <span class="tile-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg></span>
+          <span class="tile-label">Дедлайн</span>
+          <span class="badge need" id="b-due">обязательно</span>
+        </div>
         <div class="date-row">
-          <input class="input" type="datetime-local" id="f-due">
+          <input class="input in-date" type="date" id="f-date">
+          <input class="input in-time" type="time" id="f-time" title="Время — по желанию">
+        </div>
+        <div class="quick-row">
           <button type="button" class="quick" data-quick="today">Сегодня</button>
           <button type="button" class="quick" data-quick="tomorrow">Завтра</button>
           <button type="button" class="quick" data-quick="friday">Пятница</button>
-          <button type="button" class="quick" data-quick="week">+ неделя</button>
+          <button type="button" class="quick" data-quick="week">Через неделю</button>
         </div>
-        <div class="err-msg">Без дедлайна задачу не сохранить</div>
+        <div class="hint-line">Время по желанию. Без времени — до конца дня.</div>
       </div>
-      <div class="field" data-f="notes">
-        <label>Пометки <span class="req">*</span></label>
-        <textarea class="textarea" id="f-notes" placeholder="Контекст, ссылки, что именно считать «готово»"></textarea>
-        <div class="err-msg">Добавь хотя бы короткую пометку</div>
+
+      <div class="tile t-subs" id="t-subs">
+        <div class="tile-head">
+          <span class="tile-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h12M9 12h12M9 18h12"/><path d="M3.5 6l1 1 2-2M3.5 12l1 1 2-2M3.5 18l1 1 2-2"/></svg></span>
+          <span class="tile-label">Подзадачи</span>
+          <span class="badge opt" id="b-subs">по желанию</span>
+        </div>
+        <div class="subs" id="f-subs"></div>
+        <div class="sub-add">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+          <input id="f-sub-input" placeholder="Добавить подзадачу, Enter" autocomplete="off">
+        </div>
       </div>
-      <div class="field">
-        <label>Приоритет</label>
-        <div class="pills" id="f-pri"></div>
+
+      <div class="tile t-notes" id="t-notes">
+        <div class="tile-head">
+          <span class="tile-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/></svg></span>
+          <span class="tile-label">Пометки</span>
+          <span class="badge opt" id="b-notes">по желанию</span>
+        </div>
+        <textarea class="textarea input" id="f-notes" placeholder="Контекст, ссылки, детали"></textarea>
       </div>
+
+      <div class="pri-row"><span>Приоритет</span><div class="pills" id="f-pri"></div></div>
     </div>
     <div class="meta-line" id="f-meta"></div>
     <div class="modal-foot">
@@ -349,16 +438,17 @@ input, textarea, select { font: inherit; color: inherit; }
   </form>
 </div>
 
-<div class="toast" id="toast"><span id="toast-msg"></span><button id="toast-act" hidden></button></div>
+<div class="toast" id="toast"><span id="toast-msg"></span><div class="acts" id="toast-acts"></div></div>
 
 <script>
 // ============================================================
 const SUPABASE_URL = 'https://vknsijnxkditmfodqlwo.supabase.co'
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZrbnNpam54a2RpdG1mb2RxbHdvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyNDIwNjgsImV4cCI6MjA5NDgxODA2OH0.VtLgNSKY2FwSPmo_0XRWVwEziTSmcLzY6SKAwiJPGWk'
 const CALENDAR_ENDPOINT = '/.netlify/functions/calendar'
+const USER_NAME = 'Василий'
 // ============================================================
 
-// Структура блоков. Чтобы добавить категорию — допиши её сюда.
+// Структура блоков. Переименовать что-то — поменяй label здесь.
 const AREAS = {
   personal: {
     label: 'Личное', color: 'var(--personal)', categoryRequired: false,
@@ -366,7 +456,7 @@ const AREAS = {
       sport:     { label: 'Спорт' },
       health:    { label: 'Здоровье' },
       finance:   { label: 'Финансы' },
-      home:      { label: 'Быт' },
+      home:      { label: 'Дом' },
       underdogs: { label: 'Underdogs' },
     }
   },
@@ -385,27 +475,27 @@ const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
 const $ = id => document.getElementById(id)
 
 const state = {
-  tasks: [],
-  loaded: false,
+  tasks: [], loaded: false, hasSubtasks: false,
   view: 'list',
-  scope: { kind: 'all' },              // all | inbox | area {area, category?, subcategory?}
+  scope: { kind: 'home' },             // home | inbox | done | area {area, category?, subcategory?}
   calMonth: startOfMonth(new Date()),
-  selDay: startOfDay(new Date()),
-  events: [], eventsKey: '', eventsStatus: 'idle',  // idle | loading | ok | off
+  selDay: null,
+  events: [], eventsKey: '', eventsStatus: 'idle',
   editing: null,
 }
 try {
-  const saved = JSON.parse(localStorage.getItem('tm-ui') || '{}')
-  if (saved.view) state.view = saved.view
-  if (saved.scope) state.scope = saved.scope
+  const saved = JSON.parse(localStorage.getItem('tm-ui2') || '{}')
+  if (saved.view === 'list' || saved.view === 'calendar') state.view = saved.view
+  if (saved.scope && ['home', 'inbox', 'done', 'area'].includes(saved.scope.kind)) state.scope = saved.scope
 } catch (e) {}
-function persistUi() { try { localStorage.setItem('tm-ui', JSON.stringify({ view: state.view, scope: state.scope })) } catch (e) {} }
+function persistUi() { try { localStorage.setItem('tm-ui2', JSON.stringify({ view: state.view, scope: state.scope })) } catch (e) {} }
 
 // ---------------- data ----------------
 async function loadTasks() {
   const { data, error } = await db.from('tasks').select('*').order('due_date', { ascending: true, nullsFirst: false })
   if (error) { toast('Ошибка загрузки: ' + error.message); return }
   state.tasks = data || []
+  state.hasSubtasks = state.tasks.some(t => 'subtasks' in t)
   state.loaded = true
   render()
 }
@@ -413,7 +503,10 @@ async function loadTasks() {
 async function saveTask(payload, id) {
   const q = id ? db.from('tasks').update(payload).eq('id', id) : db.from('tasks').insert(payload)
   const { error } = await q
-  if (error) { toast('Ошибка: ' + error.message); return false }
+  if (error) {
+    const hint = /subtasks/.test(error.message) ? ' — запусти SQL для подзадач в Supabase' : ''
+    toast('Ошибка: ' + error.message + hint); return false
+  }
   return true
 }
 
@@ -424,7 +517,10 @@ async function setDone(id, done) {
   render()
   const { error } = await db.from('tasks').update(patch).eq('id', id)
   if (error) { toast('Ошибка: ' + error.message); loadTasks(); return }
-  if (done) toast('Перенесено в «Сделано»', 'Вернуть', () => setDone(id, false))
+  if (done) toast('Готово, в «Сделано»', [
+    { label: 'Следующий шаг', fn: () => openModal(null, { area: t.area, category: t.category, subcategory: t.subcategory, notes: 'После: ' + t.title }) },
+    { label: 'Вернуть', fn: () => setDone(id, false) },
+  ])
 }
 
 async function deleteTask(id) {
@@ -433,15 +529,12 @@ async function deleteTask(id) {
   render()
   const { error } = await db.from('tasks').delete().eq('id', id)
   if (error) { toast('Ошибка: ' + error.message); loadTasks(); return }
-  if (t) toast('Задача удалена', 'Вернуть', async () => {
-    const { id: _id, ...rest } = t
-    await saveTask(rest); loadTasks()
-  })
+  if (t) toast('Задача удалена', [{ label: 'Вернуть', fn: async () => { const { id: _id, ...rest } = t; await saveTask(rest); loadTasks() } }])
 }
 
 async function quickCapture(text) {
   const ok = await saveTask({ title: text, is_brain_dump: true, priority: 'medium' })
-  if (ok) { toast('Во входящих — разберёшь позже'); loadTasks() }
+  if (ok) { toast('Записано в «Разобрать»'); loadTasks() }
 }
 
 async function loadEvents(from, to) {
@@ -464,10 +557,13 @@ function esc(s) { return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt
 function startOfDay(d) { const x = new Date(d); x.setHours(0,0,0,0); return x }
 function startOfMonth(d) { return new Date(d.getFullYear(), d.getMonth(), 1) }
 function addDays(d, n) { const x = new Date(d); x.setDate(x.getDate() + n); return x }
-function sameDay(a, b) { return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate() }
+function sameDay(a, b) { return a && b && a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate() }
 function dayDiff(d) { return Math.round((startOfDay(d) - startOfDay(new Date())) / 864e5) }
 function hhmm(d) { return d.toLocaleTimeString('ru', { hour: '2-digit', minute: '2-digit' }) }
 function isEndOfDay(d) { return d.getHours() === 23 && d.getMinutes() === 59 }
+const p2 = n => String(n).padStart(2, '0')
+function ymd(d) { return `${d.getFullYear()}-${p2(d.getMonth()+1)}-${p2(d.getDate())}` }
+function cap(s) { return s.replace(/^./, c => c.toUpperCase()) }
 function fmtDue(iso) {
   const d = new Date(iso), diff = dayDiff(d)
   const time = isEndOfDay(d) ? '' : ', ' + hhmm(d)
@@ -476,24 +572,20 @@ function fmtDue(iso) {
   if (diff === -1) return 'Вчера' + time
   const opts = { day: 'numeric', month: 'short' }
   if (d.getFullYear() !== new Date().getFullYear()) opts.year = 'numeric'
-  if (diff > 1 && diff < 7) return d.toLocaleDateString('ru', { weekday: 'short' }).replace(/^./, c => c.toUpperCase()) + ', ' + d.toLocaleDateString('ru', opts) + time
+  if (diff > 1 && diff < 7) return cap(d.toLocaleDateString('ru', { weekday: 'short' })) + ', ' + d.toLocaleDateString('ru', opts) + time
   return d.toLocaleDateString('ru', opts) + time
 }
-function toLocalInput(iso) {
-  if (!iso) return ''
-  const d = new Date(iso), p = n => String(n).padStart(2, '0')
-  return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`
-}
+function plural(n, one, few, many) { const m10 = n % 10, m100 = n % 100; return m10 === 1 && m100 !== 11 ? one : m10 >= 2 && m10 <= 4 && (m100 < 10 || m100 >= 20) ? few : many }
 function isOverdue(t) { return t.status !== 'done' && t.due_date && new Date(t.due_date) < new Date() }
 function isInbox(t) { return !t.area }
-function catLabel(t) {
+function catLabel(t, skipArea) {
   const a = AREAS[t.area]; if (!a) return null
-  const parts = [a.label]
+  const parts = skipArea ? [] : [a.label]
   const c = a.cats[t.category]; if (c) { parts.push(c.label); if (c.subs && c.subs[t.subcategory]) parts.push(c.subs[t.subcategory]) }
   return parts.join(' · ')
 }
 function inScope(t, scope = state.scope) {
-  if (scope.kind === 'all') return true
+  if (scope.kind === 'home' || scope.kind === 'done') return true
   if (scope.kind === 'inbox') return isInbox(t)
   if (t.area !== scope.area) return false
   if (scope.category && t.category !== scope.category) return false
@@ -501,14 +593,17 @@ function inScope(t, scope = state.scope) {
   return true
 }
 function scopeTitle(scope = state.scope) {
-  if (scope.kind === 'all') return 'Все задачи'
-  if (scope.kind === 'inbox') return 'Входящие'
+  if (scope.kind === 'home') return 'Главная'
+  if (scope.kind === 'inbox') return 'Разобрать'
+  if (scope.kind === 'done') return 'Сделано'
   const a = AREAS[scope.area], parts = [a.label]
   if (scope.category) { const c = a.cats[scope.category]; parts.push(c.label); if (scope.subcategory) parts.push(c.subs[scope.subcategory]) }
   return parts.join(' / ')
 }
 function scopeEq(a, b) { return JSON.stringify(a) === JSON.stringify(b) }
 function active() { return state.tasks.filter(t => t.status !== 'done') }
+function doneList() { return state.tasks.filter(t => t.status === 'done') }
+function subsOf(t) { return Array.isArray(t.subtasks) ? t.subtasks : [] }
 function sortTasks(list) {
   const pr = { high: 0, medium: 1, low: 2 }
   return list.sort((a, b) => {
@@ -517,42 +612,58 @@ function sortTasks(list) {
     return (pr[a.priority] ?? 1) - (pr[b.priority] ?? 1)
   })
 }
+const ICONS = {
+  home: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>',
+  inbox: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13h5l2 3h4l2-3h5"/><path d="M5 5h14l2 8v6H3v-6z"/></svg>',
+  done: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/></svg>',
+  list: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/></svg>',
+  cal: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>',
+  plus: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
+  x: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>',
+  bolt: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>',
+}
 
-// ---------------- render: sidebar ----------------
+// ---------------- sidebar ----------------
 function renderSidebar() {
   const act = active()
   const count = scope => act.filter(t => inScope(t, scope)).length || ''
-  const item = (scope, label, cls = '', color) => `
+  const item = (scope, label, cls = '', lead = '', cnt = count(scope)) => `
     <button class="nav-item ${cls} ${scopeEq(scope, state.scope) ? 'active' : ''}" data-scope='${esc(JSON.stringify(scope))}'>
-      ${color ? `<span class="dot" style="--c:${color}"></span>` : ''}
-      <span>${esc(label)}</span><span class="count">${count(scope)}</span>
+      ${lead}<span>${esc(label)}</span><span class="count">${cnt}</span>
     </button>`
+  const dot = c => `<span class="dot" style="--c:${c}"></span>`
   let html = `<div class="brand">Разделы</div><div class="nav-group">`
-  html += item({ kind: 'inbox' }, 'Входящие', '', 'var(--warn)')
-  html += item({ kind: 'all' }, 'Все задачи', '', 'var(--faint)')
+  html += item({ kind: 'home' }, 'Главная', '', ICONS.home, '')
+  const inboxN = act.filter(isInbox).length
+  html += item({ kind: 'inbox' }, 'Разобрать', '', ICONS.inbox, inboxN || '')
   html += `</div>`
   for (const [ak, a] of Object.entries(AREAS)) {
     html += `<div class="nav-group"><div class="nav-label">${esc(a.label)}</div>`
-    html += item({ kind: 'area', area: ak }, 'Всё ' + a.label.toLowerCase(), 'area-head', a.color)
+    html += item({ kind: 'area', area: ak }, 'Всё ' + a.label.toLowerCase(), 'area-head', dot(a.color))
     for (const [ck, c] of Object.entries(a.cats)) {
       html += item({ kind: 'area', area: ak, category: ck }, c.label, 'lvl2')
       if (c.subs) for (const [sk, s] of Object.entries(c.subs)) html += item({ kind: 'area', area: ak, category: ck, subcategory: sk }, s, 'lvl3')
     }
     html += `</div>`
   }
+  const weekAgo = addDays(new Date(), -7)
+  const doneWeek = doneList().filter(t => new Date(t.completed_at || 0) > weekAgo).length
+  html += `<div class="nav-group last">` + item({ kind: 'done' }, 'Сделано', '', ICONS.done, doneWeek ? '+' + doneWeek : '') + `</div>`
   $('sidebar').innerHTML = html
 }
 
-// ---------------- render: rows ----------------
-function taskRow(t) {
+// ---------------- rows ----------------
+function taskRow(t, opts = {}) {
   const done = t.status === 'done'
-  const label = catLabel(t)
+  const label = catLabel(t, opts.skipArea)
   const chips = []
   if (label) chips.push(`<span class="chip ${t.area}">${esc(label)}</span>`)
-  else chips.push(`<span class="chip missing">Не разобрано</span>`)
+  else if (!t.area) chips.push(`<span class="chip missing">Не разобрано</span>`)
   if (done && t.completed_at) chips.push(`<span class="chip">✓ ${esc(fmtDue(t.completed_at))}</span>`)
   else if (t.due_date) chips.push(`<span class="chip ${isOverdue(t) ? 'overdue' : ''}">${esc(fmtDue(t.due_date))}</span>`)
-  else chips.push(`<span class="chip missing">Нет дедлайна</span>`)
+  else chips.push(`<span class="chip missing">Нет даты</span>`)
+  const subs = subsOf(t)
+  if (subs.length) chips.push(`<span class="chip subs-chip">☑ ${subs.filter(s => s.done).length}/${subs.length}</span>`)
   if (!done && t.priority === 'high') chips.push(`<span class="chip overdue">Высокий</span>`)
   return `
   <div class="row ${done ? 'done' : ''}" data-id="${esc(t.id)}">
@@ -564,9 +675,7 @@ function taskRow(t) {
     </div>
     <div class="row-side">
       ${done ? `<button class="icon-btn" data-act="toggle" title="Вернуть в работу">↺</button>` : ''}
-      <button class="icon-btn hide-m" data-act="delete" title="Удалить">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
-      </button>
+      <button class="icon-btn hide-m" data-act="delete" title="Удалить">${ICONS.x}</button>
     </div>
   </div>`
 }
@@ -591,16 +700,43 @@ function eventsOn(day) {
   const s = startOfDay(day), e = addDays(s, 1)
   return state.events.filter(ev => ev.start < e && ev.end > s).sort((a, b) => (b.allDay - a.allDay) || (a.start - b.start))
 }
-
-// ---------------- render: views ----------------
 function captureBar() {
-  return `<form class="capture" id="capture"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg><input id="capture-input" placeholder="Быстро записать мысль во входящие…" autocomplete="off"><span class="kbd">Enter</span></form>`
+  return `<form class="capture" id="capture">${ICONS.bolt}<input id="capture-input" placeholder="Быстро записать мысль, разберёшь потом…" autocomplete="off"><span class="kbd">Enter</span></form>`
+}
+function todayEventsUpcoming() {
+  loadEvents(startOfDay(new Date()), addDays(startOfDay(new Date()), 1))
+  return state.eventsStatus === 'ok' ? eventsOn(new Date()).filter(e => e.allDay || e.end > new Date()) : []
 }
 
-function renderList() {
+// ---------------- views ----------------
+function renderHome() {
+  const act = sortTasks(active())
+  const weekAgo = addDays(new Date(), -7)
+  const todayN = act.filter(t => t.due_date && dayDiff(new Date(t.due_date)) <= 0).length
+  const doneWeek = doneList().filter(t => new Date(t.completed_at || 0) > weekAgo).length
+  let html = `<div class="stats">
+    <div class="stat s1"><b>${act.filter(t => t.area).length}</b><span>Активные</span></div>
+    <div class="stat s2"><b>${todayN}</b><span>На сегодня</span></div>
+    <div class="stat s3"><b>${doneWeek}</b><span>Сделано за неделю</span></div>
+  </div>` + captureBar()
+  const inbox = act.filter(isInbox)
+  if (inbox.length) html += `<button class="inbox-note" data-scope='{"kind":"inbox"}'>${ICONS.inbox}<span>${inbox.length} ${plural(inbox.length, 'запись ждёт', 'записи ждут', 'записей ждут')} разбора</span><span class="go">Разобрать →</span></button>`
+  const evs = todayEventsUpcoming()
+  if (evs.length) html += section('Сегодня в календаре', evs.map(eventRow).join(''), evs.length)
+  html += `<div class="cols">`
+  for (const [ak, a] of Object.entries(AREAS)) {
+    const list = act.filter(t => t.area === ak)
+    html += `<div class="col">
+      <div class="col-head"><span class="dot" style="--c:${a.color}"></span><h3 data-scope='${esc(JSON.stringify({ kind: 'area', area: ak }))}'>${esc(a.label)}</h3><span class="n">${list.length || ''}</span>
+        <button class="icon-btn" data-add-area="${ak}" title="Задача в «${esc(a.label)}»">${ICONS.plus}</button></div>
+      <div class="rows">${list.length ? list.map(t => taskRow(t, { skipArea: true })).join('') : `<div class="mini-empty">Пусто. Нажми +, чтобы добавить</div>`}</div>
+    </div>`
+  }
+  return html + `</div>`
+}
+
+function renderGrouped() {
   const tasks = sortTasks(active().filter(t => inScope(t)))
-  if (state.scope.kind === 'all') loadEvents(startOfDay(new Date()), addDays(startOfDay(new Date()), 1))
-  const showEvents = state.scope.kind === 'all' && state.eventsStatus === 'ok'
   const groups = { overdue: [], today: [], tomorrow: [], week: [], later: [], nodate: [] }
   for (const t of tasks) {
     if (!t.due_date) { groups.nodate.push(t); continue }
@@ -608,29 +744,22 @@ function renderList() {
     const diff = dayDiff(new Date(t.due_date))
     groups[diff <= 0 ? 'today' : diff === 1 ? 'tomorrow' : diff < 7 ? 'week' : 'later'].push(t)
   }
-  const todayEvents = showEvents ? eventsOn(new Date()).filter(e => e.allDay || e.end > new Date()) : []
-  const weekAgo = addDays(new Date(), -7)
-  const doneWeek = state.tasks.filter(t => t.status === 'done' && inScope(t) && new Date(t.completed_at || 0) > weekAgo).length
-  let html = `<div class="stats">
-    <div class="stat s1"><b>${tasks.length}</b><span>Активные</span></div>
-    <div class="stat s2"><b>${groups.overdue.length + groups.today.length}</b><span>На сегодня</span></div>
-    <div class="stat s3"><b>${doneWeek}</b><span>Сделано за неделю</span></div>
-  </div>` + captureBar()
-  if (!tasks.length && !todayEvents.length) {
-    return html + `<div class="empty"><b>${state.scope.kind === 'inbox' ? 'Входящие пусты' : 'Здесь пусто'}</b>${state.scope.kind === 'inbox' ? 'Всё разобрано' : 'Нажми «Задача», чтобы добавить'}</div>`
-  }
-  if (groups.overdue.length) html += section('Просрочено', groups.overdue.map(taskRow).join(''), groups.overdue.length, 'overdue')
-  if (groups.today.length || todayEvents.length) html += section('Сегодня', todayEvents.map(eventRow).join('') + groups.today.map(taskRow).join(''), groups.today.length + todayEvents.length)
-  if (groups.tomorrow.length) html += section('Завтра', groups.tomorrow.map(taskRow).join(''), groups.tomorrow.length)
-  if (groups.week.length) html += section('Ближайшие 7 дней', groups.week.map(taskRow).join(''), groups.week.length)
-  if (groups.later.length) html += section('Позже', groups.later.map(taskRow).join(''), groups.later.length)
-  if (groups.nodate.length) html += section(state.scope.kind === 'inbox' ? 'Нужно разобрать: добавить блок, дедлайн и пометки' : 'Без дедлайна', groups.nodate.map(taskRow).join(''), groups.nodate.length)
+  const inbox = state.scope.kind === 'inbox'
+  let html = captureBar()
+  if (!tasks.length) return html + `<div class="empty"><b>${inbox ? 'Всё разобрано' : 'Здесь пусто'}</b>${inbox ? 'Сюда падают быстрые мысли и задачи из Telegram без блока' : 'Нажми «Задача», чтобы добавить'}</div>`
+  const so = { skipArea: state.scope.kind === 'area' }
+  const rows = l => l.map(t => taskRow(t, so)).join('')
+  if (groups.overdue.length) html += section('Просрочено', rows(groups.overdue), groups.overdue.length, 'overdue')
+  if (groups.today.length) html += section('Сегодня', rows(groups.today), groups.today.length)
+  if (groups.tomorrow.length) html += section('Завтра', rows(groups.tomorrow), groups.tomorrow.length)
+  if (groups.week.length) html += section('Ближайшие 7 дней', rows(groups.week), groups.week.length)
+  if (groups.later.length) html += section('Позже', rows(groups.later), groups.later.length)
+  if (groups.nodate.length) html += section(inbox ? 'Открой запись, выбери блок и дату' : 'Без даты', rows(groups.nodate), groups.nodate.length)
   return html
 }
 
 function renderDone() {
-  const tasks = state.tasks.filter(t => t.status === 'done' && inScope(t))
-    .sort((a, b) => new Date(b.completed_at || b.created_at) - new Date(a.completed_at || a.created_at))
+  const tasks = doneList().sort((a, b) => new Date(b.completed_at || b.created_at) - new Date(a.completed_at || a.created_at))
   if (!tasks.length) return `<div class="empty"><b>Пока ничего не сделано</b>Отмеченные задачи будут копиться здесь</div>`
   const byDay = new Map()
   for (const t of tasks) {
@@ -639,8 +768,8 @@ function renderDone() {
     if (!byDay.has(key)) byDay.set(key, [])
     byDay.get(key).push(t)
   }
-  let html = `<div class="section-head" style="padding-bottom:18px"><h3>Всего сделано: ${tasks.length}</h3></div>`
-  for (const [k, list] of byDay) html += section(k, list.map(taskRow).join(''), list.length)
+  let html = ''
+  for (const [k, list] of byDay) html += section(k, list.map(t => taskRow(t)).join(''), list.length)
   return html
 }
 
@@ -653,12 +782,23 @@ function calRange() {
   return { start, end: addDays(start, cells), cells }
 }
 
+function dayExpand(day) {
+  const tasks = sortTasks(state.tasks.filter(t => t.due_date && inScope(t) && sameDay(new Date(t.due_date), day)))
+  const evs = eventsOn(day)
+  const title = cap(day.toLocaleDateString('ru', { weekday: 'long', day: 'numeric', month: 'long' }))
+  return `<div class="cal-expand">
+    <div class="agenda-head"><h3>${esc(title)}</h3>
+      <div><button class="btn btn-ghost" data-cal="add">${ICONS.plus} Задача</button><button class="icon-btn" data-cal="close" title="Свернуть">${ICONS.x}</button></div></div>
+    ${tasks.length || evs.length ? `<div class="rows">${evs.map(eventRow).join('')}${tasks.map(t => taskRow(t)).join('')}</div>` : `<div class="mini-empty">На этот день ничего нет</div>`}
+  </div>`
+}
+
 function renderCalendar() {
   const { start, end, cells } = calRange()
   loadEvents(start, end)
   const tasks = state.tasks.filter(t => t.due_date && inScope(t) && t.status !== 'done')
   const today = new Date()
-  const monthName = state.calMonth.toLocaleDateString('ru', { month: 'long' }) + ' ' + state.calMonth.getFullYear()
+  const monthName = cap(state.calMonth.toLocaleDateString('ru', { month: 'long' })) + ' ' + state.calMonth.getFullYear()
   const status = { loading: 'Загружаю Google Календарь…', off: 'Google Календарь не подключён', ok: 'Google Календарь подключён', idle: '' }[state.eventsStatus]
   let html = `
   <div class="cal-head">
@@ -672,47 +812,64 @@ function renderCalendar() {
   for (let i = 0; i < cells; i++) {
     const day = addDays(start, i)
     const dayTasks = sortTasks(tasks.filter(t => sameDay(new Date(t.due_date), day)))
-    const dayEvents = eventsOn(day)
     const items = [
-      ...dayEvents.map(e => `<div class="ci ev" title="${esc(e.title)}">${e.allDay ? '' : hhmm(e.start) + ' '}${esc(e.title)}</div>`),
+      ...eventsOn(day).map(e => `<div class="ci ev" title="${esc(e.title)}">${e.allDay ? '' : hhmm(e.start) + ' '}${esc(e.title)}</div>`),
       ...dayTasks.map(t => `<div class="ci ${isOverdue(t) ? 'over' : ''}" style="--c:${AREAS[t.area]?.color || 'var(--warn)'}" title="${esc(t.title)}">${esc(t.title)}</div>`)
     ]
     const max = 3
     html += `<div class="cal-cell ${day.getMonth() !== state.calMonth.getMonth() ? 'other' : ''} ${sameDay(day, today) ? 'today' : ''} ${sameDay(day, state.selDay) ? 'sel' : ''}" data-day="${day.toISOString()}">
-      <div class="cal-num">${day.getDate()}</div>${items.map((x, i) => i >= max ? x.replace('class="ci', 'class="ci x') : x).join('')}${items.length > max ? `<div class="ci-more">ещё ${items.length - max}</div>` : ''}
+      <div class="cal-num">${day.getDate()}</div>${items.map((x, j) => j >= max ? x.replace('class="ci', 'class="ci x') : x).join('')}${items.length > max ? `<div class="ci-more">ещё ${items.length - max}</div>` : ''}
     </div>`
+    if (i % 7 === 6 && state.selDay && state.selDay >= addDays(day, -6) && state.selDay < addDays(day, 1)) html += dayExpand(state.selDay)
   }
-  html += `</div>`
+  return html + `</div>`
+}
 
-  // agenda for selected day
-  const sd = state.selDay
-  const sTasks = sortTasks(state.tasks.filter(t => t.due_date && inScope(t) && sameDay(new Date(t.due_date), sd)))
-  const sEvents = eventsOn(sd)
-  const title = sd.toLocaleDateString('ru', { weekday: 'long', day: 'numeric', month: 'long' })
-  html += `<div class="agenda"><div class="agenda-head"><h3>${esc(title.replace(/^./, c => c.toUpperCase()))}</h3>
-    <button class="btn btn-ghost" data-cal="add">+ Задача на этот день</button></div>`
-  if (!sTasks.length && !sEvents.length) html += `<div class="empty" style="padding:28px 0">Ничего не запланировано</div>`
-  else html += `<div class="rows">${sEvents.map(eventRow).join('')}${sTasks.map(taskRow).join('')}</div>`
-  html += `</div>`
-  return html
+function renderHead() {
+  const s = state.scope
+  const n = s.kind === 'done' ? doneList().length : active().filter(t => inScope(t) && (s.kind !== 'home' || t.area)).length
+  const canCal = s.kind === 'home' || s.kind === 'area'
+  $('main-head').innerHTML = `
+    <button class="menu-btn" id="menu-btn" aria-label="Разделы"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    <div class="scope-title">${esc(scopeTitle())} <span class="scope-sub">${n || ''}</span></div>
+    ${canCal ? `<div class="seg2" id="view-seg">
+      <button data-view="list" class="${state.view === 'list' ? 'active' : ''}">${ICONS.list}<span class="lbl">Список</span></button>
+      <button data-view="calendar" class="${state.view === 'calendar' ? 'active' : ''}">${ICONS.cal}<span class="lbl">Календарь</span></button>
+    </div>` : ''}`
+}
+
+function renderGreet() {
+  const h = new Date().getHours()
+  const hi = h < 5 ? 'Доброй ночи' : h < 12 ? 'Доброе утро' : h < 18 ? 'Добрый день' : 'Добрый вечер'
+  const parts = [cap(new Date().toLocaleDateString('ru', { weekday: 'long', day: 'numeric', month: 'long' }))]
+  if (state.loaded) {
+    const today = active().filter(t => t.due_date && dayDiff(new Date(t.due_date)) <= 0).length
+    parts.push(today ? `${today} ${plural(today, 'задача', 'задачи', 'задач')} на сегодня` : 'на сегодня задач нет')
+  }
+  if (state.eventsStatus === 'ok') {
+    const ev = eventsOn(new Date()).filter(e => !e.allDay && e.end > new Date()).length
+    if (ev) parts.push(`${ev} ${plural(ev, 'встреча', 'встречи', 'встреч')} впереди`)
+  }
+  $('greet').innerHTML = `<h1>${hi}, <b>${esc(USER_NAME)}</b></h1><p>${esc(parts.join(' · '))}</p>`
 }
 
 function render() {
-  renderSidebar()
-  renderGreet()
-  const scopeCount = active().filter(t => inScope(t)).length
-  $('scope-title').innerHTML = `${esc(scopeTitle())} <span class="scope-sub">${scopeCount || ''}</span>`
-  document.querySelectorAll('#view-seg button').forEach(b => b.classList.toggle('active', b.dataset.view === state.view))
+  renderSidebar(); renderGreet(); renderHead()
   if (!state.loaded) { $('content').innerHTML = `<div class="empty">Загружаю…</div>`; return }
   const focused = document.activeElement?.id === 'capture-input'
   const draft = $('capture-input')?.value || ''
-  $('content').innerHTML = state.view === 'calendar' ? renderCalendar() : state.view === 'done' ? renderDone() : renderList()
+  const s = state.scope
+  $('content').innerHTML =
+    s.kind === 'done' ? renderDone() :
+    s.kind === 'inbox' ? renderGrouped() :
+    state.view === 'calendar' ? renderCalendar() :
+    s.kind === 'home' ? renderHome() : renderGrouped()
   const ci = $('capture-input')
   if (ci) { ci.value = draft; if (focused) ci.focus() }
 }
 
 // ---------------- modal ----------------
-const form = { area: null, category: null, subcategory: null, priority: 'medium' }
+const form = { area: null, category: null, subcategory: null, priority: 'medium', subtasks: [] }
 
 function openModal(task, preset = {}) {
   state.editing = task || null
@@ -722,75 +879,112 @@ function openModal(task, preset = {}) {
   form.category = t.category ?? preset.category ?? sc.category ?? null
   form.subcategory = t.subcategory ?? preset.subcategory ?? sc.subcategory ?? null
   form.priority = t.priority || 'medium'
+  form.subtasks = subsOf(t).map(s => ({ ...s }))
   $('f-title').value = t.title || ''
-  $('f-notes').value = t.notes || ''
-  $('f-due').value = toLocalInput(t.due_date || preset.due)
+  $('f-notes').value = t.notes || preset.notes || ''
+  const due = t.due_date || preset.due
+  if (due) { const d = new Date(due); $('f-date').value = ymd(d); $('f-time').value = isEndOfDay(d) ? '' : `${p2(d.getHours())}:${p2(d.getMinutes())}` }
+  else { $('f-date').value = ''; $('f-time').value = '' }
+  $('f-sub-input').value = ''
   $('f-delete').style.display = task ? '' : 'none'
   $('f-save').textContent = task ? 'Сохранить' : 'Добавить'
   $('f-meta').textContent = task && task.created_at ? 'Создано ' + new Date(task.created_at).toLocaleString('ru', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : ''
-  document.querySelectorAll('#task-form .field').forEach(f => f.classList.remove('err'))
+  document.querySelectorAll('#task-form .err').forEach(f => f.classList.remove('err'))
   $('f-delete').dataset.confirm = ''
   $('f-delete').textContent = 'Удалить'
-  renderPills()
+  renderPills(); renderSubs(); updateBadges()
   $('overlay').classList.add('open')
   setTimeout(() => $('f-title').focus(), 30)
 }
 function closeModal() { $('overlay').classList.remove('open'); state.editing = null }
 
+function areaOk() { return !!form.area && (!AREAS[form.area].categoryRequired || !!form.category) }
+function setBadge(id, cls, text) { const b = $(id); b.className = 'badge ' + cls; b.textContent = text }
+function updateBadges() {
+  setBadge('b-area', areaOk() ? 'ok' : 'need', areaOk() ? '✓ ' + catLabel(form) : 'обязательно')
+  const hasDate = !!$('f-date').value
+  setBadge('b-due', hasDate ? 'ok' : 'need', hasDate ? '✓ ' + fmtDue(dueIso()) : 'обязательно')
+  const n = form.subtasks.length
+  setBadge('b-subs', n ? 'ok' : 'opt', n ? `${form.subtasks.filter(s => s.done).length}/${n}` : 'по желанию')
+  const hasNotes = !!$('f-notes').value.trim()
+  setBadge('b-notes', hasNotes ? 'ok' : 'opt', hasNotes ? '✓ есть' : 'по желанию')
+  if (areaOk()) $('t-area').classList.remove('err')
+  if (hasDate) $('t-due').classList.remove('err')
+  if ($('f-title').value.trim()) $('t-title').classList.remove('err')
+}
+function dueIso() {
+  const d = $('f-date').value; if (!d) return null
+  return new Date(`${d}T${$('f-time').value || '23:59'}`).toISOString()
+}
+
 function renderPills() {
-  if (form.area) $('f-area').closest('.field').classList.remove('err')
-  if (form.category || !AREAS[form.area]?.categoryRequired) $('f-cat-wrap').classList.remove('err')
   const pill = (val, label, on, extra = '') => `<button type="button" class="pill ${on ? 'on' : ''} ${extra}" data-val="${esc(val)}">${esc(label)}</button>`
   $('f-area').innerHTML = Object.entries(AREAS).map(([k, a]) => pill(k, a.label, form.area === k, k)).join('')
   const a = AREAS[form.area]
-  $('f-cat-wrap').style.display = a ? '' : 'none'
-  if (a) {
-    $('f-cat-wrap').querySelector('label').innerHTML = 'Категория' + (a.categoryRequired ? ' <span class="req">*</span>' : '')
-    $('f-cat').innerHTML = (a.categoryRequired ? '' : pill('', 'Без категории', !form.category)) +
-      Object.entries(a.cats).map(([k, c]) => pill(k, c.label, form.category === k, form.area)).join('')
-  }
+  $('f-cat').style.display = a ? '' : 'none'
+  if (a) $('f-cat').innerHTML = (a.categoryRequired ? '' : pill('', 'Без категории', !form.category)) + Object.entries(a.cats).map(([k, c]) => pill(k, c.label, form.category === k, form.area)).join('')
   const c = a && a.cats[form.category]
-  $('f-sub-wrap').style.display = c && c.subs ? '' : 'none'
+  $('f-sub').style.display = c && c.subs ? '' : 'none'
   if (c && c.subs) $('f-sub').innerHTML = pill('', 'Не указано', !form.subcategory) + Object.entries(c.subs).map(([k, s]) => pill(k, s, form.subcategory === k, form.area)).join('')
   $('f-pri').innerHTML = Object.entries(PRI).map(([k, l]) => pill(k, l, form.priority === k)).join('')
+  updateBadges()
+}
+function renderSubs() {
+  $('f-subs').innerHTML = form.subtasks.map((s, i) => `
+    <div class="sub ${s.done ? 'done' : ''}" data-i="${i}">
+      <button type="button" class="check ${s.done ? 'on' : ''}" data-sub="toggle"></button>
+      <input class="sub-text" value="${esc(s.text)}" data-sub="text">
+      <button type="button" class="icon-btn" data-sub="del" title="Убрать">${ICONS.x}</button>
+    </div>`).join('')
+  updateBadges()
 }
 
 $('f-area').addEventListener('click', e => { const b = e.target.closest('.pill'); if (!b) return; if (form.area !== b.dataset.val) { form.area = b.dataset.val; form.category = null; form.subcategory = null } renderPills() })
 $('f-cat').addEventListener('click', e => { const b = e.target.closest('.pill'); if (!b) return; form.category = b.dataset.val || null; form.subcategory = null; renderPills() })
 $('f-sub').addEventListener('click', e => { const b = e.target.closest('.pill'); if (!b) return; form.subcategory = b.dataset.val || null; renderPills() })
 $('f-pri').addEventListener('click', e => { const b = e.target.closest('.pill'); if (!b) return; form.priority = b.dataset.val; renderPills() })
+$('f-subs').addEventListener('click', e => {
+  const b = e.target.closest('[data-sub]'); if (!b) return
+  const i = +b.closest('.sub').dataset.i
+  if (b.dataset.sub === 'toggle') { form.subtasks[i].done = !form.subtasks[i].done; renderSubs() }
+  if (b.dataset.sub === 'del') { form.subtasks.splice(i, 1); renderSubs() }
+})
+$('f-subs').addEventListener('input', e => { if (e.target.dataset.sub === 'text') form.subtasks[+e.target.closest('.sub').dataset.i].text = e.target.value })
+$('f-sub-input').addEventListener('keydown', e => {
+  if (e.key !== 'Enter') return
+  e.preventDefault()
+  const v = e.target.value.trim(); if (!v) return
+  form.subtasks.push({ text: v, done: false }); e.target.value = ''; renderSubs()
+})
+;['f-title', 'f-notes', 'f-date', 'f-time'].forEach(id => $(id).addEventListener('input', updateBadges))
 
 document.querySelectorAll('[data-quick]').forEach(b => b.addEventListener('click', () => {
   const now = new Date(); let d
-  const cur = $('f-due').value ? new Date($('f-due').value) : null
-  const h = cur ? cur.getHours() : 18, m = cur ? cur.getMinutes() : 0
   if (b.dataset.quick === 'today') d = now
   if (b.dataset.quick === 'tomorrow') d = addDays(now, 1)
   if (b.dataset.quick === 'friday') { const diff = (5 - now.getDay() + 7) % 7 || 7; d = addDays(now, diff) }
   if (b.dataset.quick === 'week') d = addDays(now, 7)
-  d.setHours(h, m, 0, 0)
-  $('f-due').value = toLocalInput(d.toISOString())
-  $('f-due').closest('.field').classList.remove('err')
+  $('f-date').value = ymd(d)
+  updateBadges()
 }))
 
 $('task-form').addEventListener('submit', async e => {
   e.preventDefault()
-  const title = $('f-title').value.trim(), notes = $('f-notes').value.trim(), due = $('f-due').value
-  const errs = {
-    title: !title,
-    area: !form.area,
-    category: form.area && AREAS[form.area].categoryRequired && !form.category,
-    due: !due,
-    notes: !notes,
-  }
-  document.querySelectorAll('#task-form .field[data-f]').forEach(f => f.classList.toggle('err', !!errs[f.dataset.f]))
+  const pending = $('f-sub-input').value.trim()
+  if (pending) { form.subtasks.push({ text: pending, done: false }); $('f-sub-input').value = ''; renderSubs() }
+  const title = $('f-title').value.trim()
+  const errs = { 't-title': !title, 't-area': !areaOk(), 't-due': !$('f-date').value }
+  for (const [id, bad] of Object.entries(errs)) $(id).classList.toggle('err', bad)
+  if ($('t-area').classList.contains('err')) setBadge('b-area', 'need', form.area ? 'выбери категорию' : 'выбери блок')
+  if ($('t-due').classList.contains('err')) setBadge('b-due', 'need', 'выбери дату')
   if (Object.values(errs).some(Boolean)) return
   const payload = {
-    title, notes, priority: form.priority,
+    title, notes: $('f-notes').value.trim() || null, priority: form.priority,
     area: form.area, category: form.category, subcategory: form.subcategory,
-    due_date: new Date(due).toISOString(),
-    is_brain_dump: false,
+    due_date: dueIso(), is_brain_dump: false,
   }
+  const subs = form.subtasks.filter(s => s.text.trim()).map(s => ({ text: s.text.trim(), done: !!s.done }))
+  if (state.hasSubtasks || subs.length) payload.subtasks = subs
   if (state.editing && state.editing.due_date !== payload.due_date) Object.assign(payload, { notified_overdue: false, notified_1day: false })
   $('f-save').disabled = true
   const ok = await saveTask(payload, state.editing?.id)
@@ -806,29 +1000,29 @@ $('f-delete').addEventListener('click', () => {
   if (!b.dataset.confirm) { b.dataset.confirm = '1'; b.textContent = 'Точно удалить?'; return }
   const id = state.editing.id; closeModal(); deleteTask(id)
 })
-;['f-title', 'f-notes', 'f-due'].forEach(id => $(id).addEventListener('input', e => e.target.closest('.field').classList.remove('err')))
 
 // ---------------- events ----------------
-$('sidebar').addEventListener('click', e => {
-  const b = e.target.closest('[data-scope]'); if (!b) return
-  state.scope = JSON.parse(b.dataset.scope); persistUi(); closeDrawer(); render()
-})
-$('view-seg').addEventListener('click', e => {
+function goScope(scope) { state.scope = scope; persistUi(); closeDrawer(); render(); window.scrollTo({ top: 0, behavior: 'smooth' }) }
+$('sidebar').addEventListener('click', e => { const b = e.target.closest('[data-scope]'); if (b) goScope(JSON.parse(b.dataset.scope)) })
+$('main-head').addEventListener('click', e => {
+  if (e.target.closest('#menu-btn')) { $('sidebar').classList.add('open'); $('backdrop').classList.add('open'); return }
   const b = e.target.closest('[data-view]'); if (!b) return
   state.view = b.dataset.view; persistUi(); render()
 })
-$('new-btn').addEventListener('click', () => openModal(null, state.view === 'calendar' ? { due: defaultDue(state.selDay) } : {}))
-function defaultDue(day) { const d = new Date(day); d.setHours(18, 0, 0, 0); return d.toISOString() }
+$('new-btn').addEventListener('click', () => openModal(null, state.view === 'calendar' && state.selDay ? { due: endOfDayIso(state.selDay) } : {}))
+function endOfDayIso(day) { const d = new Date(day); d.setHours(23, 59, 0, 0); return d.toISOString() }
 
 $('content').addEventListener('click', e => {
+  const sc = e.target.closest('[data-scope]'); if (sc) return goScope(JSON.parse(sc.dataset.scope))
+  const add = e.target.closest('[data-add-area]'); if (add) return openModal(null, { area: add.dataset.addArea })
   const act = e.target.closest('[data-act]')
   if (act) {
     const id = act.closest('[data-id]')?.dataset.id; if (!id) return
-    const t = state.tasks.find(x => x.id == id)
+    const t = state.tasks.find(x => String(x.id) === id); if (!t) return
     if (act.dataset.act === 'toggle') {
       const row = act.closest('.row')
-      if (t.status !== 'done' && state.view !== 'calendar') { row.classList.add('leaving'); act.classList.add('on'); setTimeout(() => setDone(t.id, true), 220) }
-      else setDone(t.id, t.status !== 'done')
+      if (t.status !== 'done') { row.classList.add('leaving'); act.classList.add('on'); setTimeout(() => setDone(t.id, true), 220) }
+      else setDone(t.id, false)
     }
     if (act.dataset.act === 'edit') openModal(t)
     if (act.dataset.act === 'delete') deleteTask(t.id)
@@ -837,18 +1031,21 @@ $('content').addEventListener('click', e => {
   const cal = e.target.closest('[data-cal]')
   if (cal) {
     const k = cal.dataset.cal
-    if (k === 'prev') state.calMonth = new Date(state.calMonth.getFullYear(), state.calMonth.getMonth() - 1, 1)
-    if (k === 'next') state.calMonth = new Date(state.calMonth.getFullYear(), state.calMonth.getMonth() + 1, 1)
+    if (k === 'prev') { state.calMonth = new Date(state.calMonth.getFullYear(), state.calMonth.getMonth() - 1, 1); state.selDay = null }
+    if (k === 'next') { state.calMonth = new Date(state.calMonth.getFullYear(), state.calMonth.getMonth() + 1, 1); state.selDay = null }
     if (k === 'today') { state.calMonth = startOfMonth(new Date()); state.selDay = startOfDay(new Date()) }
-    if (k === 'add') return openModal(null, { due: defaultDue(state.selDay) })
+    if (k === 'close') state.selDay = null
+    if (k === 'add') return openModal(null, { due: endOfDayIso(state.selDay) })
     return render()
   }
   const cell = e.target.closest('[data-day]')
   if (cell) {
-    state.selDay = new Date(cell.dataset.day)
-    if (state.selDay.getMonth() !== state.calMonth.getMonth()) state.calMonth = startOfMonth(state.selDay)
+    const d = new Date(cell.dataset.day)
+    state.selDay = sameDay(d, state.selDay) ? null : d
+    if (state.selDay && d.getMonth() !== state.calMonth.getMonth()) state.calMonth = startOfMonth(d)
     render()
-    document.querySelector('.agenda')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+    const ex = document.querySelector('.cal-expand')
+    if (ex) { const r = ex.getBoundingClientRect(); if (r.bottom > window.innerHeight) ex.scrollIntoView({ behavior: 'smooth', block: 'nearest' }) }
   }
 })
 $('content').addEventListener('submit', e => {
@@ -860,7 +1057,6 @@ $('content').addEventListener('submit', e => {
 })
 
 function closeDrawer() { $('sidebar').classList.remove('open'); $('backdrop').classList.remove('open') }
-$('menu-btn').addEventListener('click', () => { $('sidebar').classList.add('open'); $('backdrop').classList.add('open') })
 $('backdrop').addEventListener('click', closeDrawer)
 
 document.addEventListener('keydown', e => {
@@ -871,35 +1067,17 @@ document.addEventListener('keydown', e => {
 
 // ---------------- toast ----------------
 let toastTimer
-function toast(msg, actLabel, actFn) {
+function toast(msg, actions = []) {
   $('toast-msg').textContent = msg
-  const b = $('toast-act')
-  b.hidden = !actLabel
-  b.textContent = actLabel || ''
-  b.onclick = () => { $('toast').classList.remove('show'); actFn && actFn() }
+  const box = $('toast-acts'); box.innerHTML = ''
+  for (const a of actions) {
+    const b = document.createElement('button'); b.textContent = a.label
+    b.onclick = () => { $('toast').classList.remove('show'); a.fn() }
+    box.appendChild(b)
+  }
   $('toast').classList.add('show')
   clearTimeout(toastTimer)
-  toastTimer = setTimeout(() => $('toast').classList.remove('show'), actLabel ? 5000 : 2200)
-}
-
-
-// ---------------- greeting ----------------
-const USER_NAME = 'Василий'
-function plural(n, one, few, many) { const m10 = n % 10, m100 = n % 100; return m10 === 1 && m100 !== 11 ? one : m10 >= 2 && m10 <= 4 && (m100 < 10 || m100 >= 20) ? few : many }
-function renderGreet() {
-  const h = new Date().getHours()
-  const hi = h < 5 ? 'Доброй ночи' : h < 12 ? 'Доброе утро' : h < 18 ? 'Добрый день' : 'Добрый вечер'
-  const date = new Date().toLocaleDateString('ru', { weekday: 'long', day: 'numeric', month: 'long' })
-  const parts = [date.replace(/^./, c => c.toUpperCase())]
-  if (state.loaded) {
-    const today = active().filter(t => t.due_date && dayDiff(new Date(t.due_date)) <= 0).length
-    parts.push(today ? `${today} ${plural(today, 'задача', 'задачи', 'задач')} на сегодня` : 'на сегодня задач нет')
-  }
-  if (state.eventsStatus === 'ok') {
-    const ev = eventsOn(new Date()).filter(e => !e.allDay && e.end > new Date()).length
-    if (ev) parts.push(`${ev} ${plural(ev, 'встреча', 'встречи', 'встреч')} впереди`)
-  }
-  $('greet').innerHTML = `<h1>${hi}, <b>${esc(USER_NAME)}</b></h1><p>${esc(parts.join(' · '))}</p>`
+  toastTimer = setTimeout(() => $('toast').classList.remove('show'), actions.length ? 6000 : 2200)
 }
 
 // ---------------- background photos (Unsplash) ----------------
@@ -945,7 +1123,7 @@ $('bg-btn').addEventListener('click', () => {
 // ---------------- start ----------------
 render()
 loadTasks()
-setInterval(loadTasks, 30000)
+setInterval(() => { if (!$('overlay').classList.contains('open')) loadTasks() }, 30000)
 document.addEventListener('visibilitychange', () => { if (!document.hidden) loadTasks() })
 </script>
 </body>
